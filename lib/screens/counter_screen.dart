@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:signals_flutter/signals_flutter.dart';
+
+final counter = signal<int>(0);
 
 class CounterScreen extends StatelessWidget {
   const CounterScreen({super.key});
@@ -7,7 +10,27 @@ class CounterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Http"),
+        title: Text("Counter"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => counter.value++,
+        child: Icon(Icons.add),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("You have pushed the button this many times:"),
+            Text(
+              "${counter.watch(context)}",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            TextButton(onPressed: () => counter.value = 0, child: Text("Reset"))
+          ],
+        ),
       ),
     );
   }
